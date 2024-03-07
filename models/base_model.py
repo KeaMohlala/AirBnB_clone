@@ -11,14 +11,34 @@ class BaseModel:
     """
     documentation for class 'BaseModel'
     """
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         every instance will be initialized with a unique id
-        and datetime when instance was created
+        and datetime when instance was created if kwargs are empty
+
+        the init method dynamically sets all attributes passed in kwargs
+        excluding(__class__) and converts the string representations
+        of datetime objects back to date time objects
         """
-        self.id = uuid.uuid4().hex
-        self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
+        if len(kwargs) == 0:
+            self.id = uuid.uuid4().hex
+            self.created_at = datetime.datetime.now()
+            self.updated_at = datetime.datetime.now()
+
+        else:
+            for key, value in kwargs.items():
+                # ignore the '__class__' key
+                if key == "__class__":
+                    continue
+                elif key == "id":
+                    self.id = value
+                elif key == "created_at" or key == "updated_at":
+                    setattr(
+                            self, key, datetime.datetime.strptime
+                            (value, "%Y-%m-%dT%H:%M:%S.%f")
+                    )
+                else:
+                    setattr(self, key, value)
 
     def __str__(self):
         """
