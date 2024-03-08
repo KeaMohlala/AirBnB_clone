@@ -5,6 +5,7 @@ which all other classes well inherit from
 """
 import datetime
 import uuid
+import models
 
 
 class BaseModel:
@@ -23,7 +24,8 @@ class BaseModel:
         if len(kwargs) == 0:
             self.id = uuid.uuid4().hex
             self.created_at = datetime.datetime.now()
-            self.updated_at = datetime.datetime.now()
+            self.updated_at = self.created_at
+            models.storage.new(self)
 
         else:
             for key, value in kwargs.items():
@@ -54,6 +56,7 @@ class BaseModel:
         updates 'updated_at' with the current datetime
         """
         self.updated_at = datetime.datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """
