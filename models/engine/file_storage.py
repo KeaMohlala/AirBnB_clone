@@ -14,6 +14,8 @@ class FileStorage:
     """
     __file_path = "file.json"
     __objects = {}
+    # define a dictionary mapping class names to class objects
+    __models = {'BaseModel': BaseModel}
 
     def all(self):
         """
@@ -46,6 +48,7 @@ class FileStorage:
                 data = json.load(f)
                 for key, value in data.items():
                     class_name = value["__class__"]
+                    # use the __models dictionary to get the class object
                     if class_name in self.__models:
                         self.__objects[key] = self.__models[class_name](
                                 **value
