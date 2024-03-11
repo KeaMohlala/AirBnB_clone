@@ -2,22 +2,35 @@
 """
 Test suits for amenities
 """
-import os
-import models
 import unittest
-from datetime import datetime
 from models.base_model import BaseModel
-from time import sleep
+from models.amenity import Amenity
+
 
 class TestAmenity(unittest.TestCase):
     """
     Test the Amenity class.
     """
-     def test_name(self):
+    def setUp(self):
         """
-        Tests for name inputs
+        sets up Amenity instance
         """
-        pass
+        self.amenity = Amenity()
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_subclass(self):
+        """
+        Tests if Amenity is a subclass of BaseModel
+        """
+        self.assertTrue(issubclass(Amenity, BaseModel))
+
+    def test_default_values(self):
+        """
+        test default values of the attributes
+        """
+        self.assertEqual(self.amenity.name, "")
+
+    def test_instance_of_class(self):
+        """
+        verifies that menity is an instance of Amenities
+        """
+        self.assertIsInstance(self.amenity, Amenity)
