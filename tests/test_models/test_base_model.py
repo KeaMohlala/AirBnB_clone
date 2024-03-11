@@ -30,7 +30,7 @@ class TestBaseModel(unittest.TestCase):
         for objects in obj.values():
             self.assertTrue(isinstance(objects, BaseModel))
             if objects.__class__.__name__ != "BaseModel":
-                self.assertTrue(issubclass(objects.__class__, BaseMode))
+                self.assertTrue(issubclass(objects.__class__, BaseModel))
 
     def test_attribute_type(self):
         """
